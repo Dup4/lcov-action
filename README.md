@@ -1,1 +1,1 @@
-# lcov reporter action
+# lcov action
