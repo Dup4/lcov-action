@@ -15,10 +15,14 @@ inputs:
     default: '0'
     required: false
   github-token:
-    description: 'Set the GitHub token to have the action comment the coverage summary in the pull request. This token is provided by Actions, you do not need to create your own token. Optional. Default: ``'
+    description: 'Set the GitHub token to have the action comment the coverage summary in the pull request. This token is provided by Actions, you do not need to create your own token. You can use ${{ secrets.GITHUB_TOKEN }} which is provided by Github Actions default. Optional. Default: ``'
     required: false
   working-directory:
     description: 'The working directory containing the source files referenced in the LCOV files. Optional. Default: `./`'
+    required: false
+  branch-coverage:
+    description: 'Generate the branch coverage. Optional. Default: `true`'
+    default: 'true'
     required: false
 runs:
   using: 'node12'
