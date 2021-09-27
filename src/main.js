@@ -26,7 +26,7 @@ async function run() {
     const isFailure = totalCoverage < parseInt(minimumCoverage);
 
     if (gitHubToken !== '' && github.context.eventName === 'pull_request') {
-      const octokit = await github.getOctokit(gitHubToken);
+      const octokit = github.getOctokit(gitHubToken);
       const summary = await summarize(coverageFile);
       const details = await detail(coverageFile, octokit);
       const sha = github.context.payload.pull_request.head.sha;
