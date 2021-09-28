@@ -17192,7 +17192,7 @@ async function run() {
     const isFailure = totalCoverage < parseInt(minimumCoverage);
 
     if (gitHubToken !== '' && github.context.eventName === 'pull_request') {
-      const octokit = await github.getOctokit(gitHubToken);
+      const octokit = github.getOctokit(gitHubToken);
       const summary = await summarize(coverageFile);
       const details = await detail(coverageFile, octokit);
       const sha = github.context.payload.pull_request.head.sha;
@@ -17251,7 +17251,7 @@ async function genhtml(coverageFiles, tmpPath) {
 
 async function mergeCoverages(coverageFiles, tmpPath) {
   // This is broken for some reason:
-  //const mergedCoverageFile = path.resolve(tmpPath, 'lcov.info');
+  // const mergedCoverageFile = path.resolve(tmpPath, 'lcov.info');
   const mergedCoverageFile = tmpPath + '/lcov.info';
   const args = [];
 
@@ -17270,6 +17270,7 @@ async function mergeCoverages(coverageFiles, tmpPath) {
 
 async function summarize(coverageFile) {
   let output = '';
+	const args = [];
 
   const options = {};
   options.listeners = {
@@ -17281,14 +17282,20 @@ async function summarize(coverageFile) {
     }
   };
 
-  await exec.exec('lcov', [
-    '--summary',
-    coverageFile,
-  ], options);
+	args.push('--summary');
+  const branchCoverage = core.getInput('branch-coverage').trim();
+  if (branchCoverage === 'true') {
+    args.push('--rc');
+    args.push('lcov_branch_coverage=1');
+  }
+
+	args.push(coverageFile);
+
+  await exec.exec('lcov', args, options);
 
   const lines = output
     .trim()
-    .split(/\r?\n/)
+    .split(/\r?\n/);
 
   lines.shift(); // Removes "Reading tracefile..."
 
