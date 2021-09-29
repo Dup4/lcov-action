@@ -21,8 +21,8 @@ inputs:
     description: 'The working directory containing the source files referenced in the LCOV files. Optional. Default: `./`'
     required: false
   branch-coverage:
-    description: 'Generate the branch coverage. Optional. Default: `true`'
-    default: 'true'
+    description: 'Generate the branch coverage. Optional. Default: `false`'
+    default: 'false'
     required: false
 runs:
   using: 'node12'
