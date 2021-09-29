@@ -208,8 +208,9 @@ async function detail(coverageFile, octokit) {
 
 		for (const changedFile of changedFiles) {
 			console.log(`${line} === ${changedFile}`);
+			console.log(`${line.trim().split('|')[0].trim()}`);
 
-			if (line.trim().split('|').trim()[0].endsWith(changedFile)) {
+			if (line.trim().split('|')[0].trim().endsWith(changedFile)) {
 				return true;
 			}
 		}
