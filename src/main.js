@@ -182,6 +182,7 @@ async function detail(coverageFile, octokit) {
 	}
 
 	args.push(coverageFile);
+	args.push('--list-full-path');
 
 	await exec.exec('lcov', args, options);
 
@@ -190,7 +191,7 @@ async function detail(coverageFile, octokit) {
 		.split(/\r?\n/);
 
 	// Removes "Reading tracefile..."
-	lines.shift(); 
+	lines.shift();
 
 	const listFilesOptions = octokit
 		.pulls.listFiles.endpoint.merge({
